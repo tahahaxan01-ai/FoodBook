@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FoodBook — AI-Powered Personalized Food Discovery</title>
+    <meta name="description" content="Discover food that matches YOUR taste. Stop relying on generic ratings — find restaurants in Pakistan matched with an advanced 9-dimensional flavor vector engine.">
+    <meta name="theme-color" content="#0B0F17">
+
+    <!-- Google Fonts: Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Leaflet.js Map CSS & JS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+    <!-- Chart.js for 9D Taste Radar -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+    <!-- Supabase JS Client -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="/css/style.css?v=2.2">
+</head>
+<body>
+    <!-- Dynamic Navigation Header -->
+    <div id="nav-root"></div>
+
+    <!-- Dynamic Main Application Views -->
+    <main id="main-root">
+        <div class="view-loader py-5 text-center">
+            <div class="spinner"></div>
+            <p>Loading FoodBook Taste Discovery Platform...</p>
+        </div>
+    </main>
+
+    <!-- Dynamic Footer -->
+    <div id="footer-root"></div>
+
+    <!-- Modals & Toasts Container -->
+    <div id="modals-root"></div>
+
+    <!-- Application Script Entrypoint -->
+    <script type="module" src="/js/app.js"></script>
+</body>
+</html>
