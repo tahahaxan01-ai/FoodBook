@@ -250,6 +250,66 @@ class ApiClient {
         if (cuisine) query.append('cuisine', cuisine);
         return this.request(`/search?${query.toString()}`);
     }
+
+    // --- Community Feed (Posts) ---
+    async getFeedPosts(limit = 20, offset = 0) {
+        return this.request(`/posts?limit=${limit}&offset=${offset}`);
+    }
+
+    async createPost(postData) {
+        return this.request('/posts', {
+            method: 'POST',
+            body: JSON.stringify(postData)
+        });
+    }
+
+    async deletePost(postId) {
+        return this.request(`/posts/${postId}`, {
+            method: 'DELETE'
+        });
+    }
+
+    async likePost(postId) {
+        return this.request(`/posts/${postId}/like`, {
+            method: 'POST'
+        });
+    }
+
+    async unlikePost(postId) {
+        return this.request(`/posts/${postId}/like`, {
+            method: 'DELETE'
+        });
+    }
+
+    // --- Comments (Posts & Reviews) ---
+    async getPostComments(postId) {
+        return this.request(`/posts/${postId}/comments`);
+    }
+
+    async addPostComment(postId, text) {
+        return this.request(`/posts/${postId}/comments`, {
+            method: 'POST',
+            body: JSON.stringify({ text })
+        });
+    }
+
+    async deletePostComment(postId, commentId) {
+        return this.request(`/posts/${postId}/comments/${commentId}`, {
+            method: 'DELETE'
+        });
+    }
+
+    async likeReview(reviewId) {
+        return this.request(`/reviews/${reviewId}/like`, {
+            method: 'POST'
+        });
+    }
+
+    async unlikeReview(reviewId) {
+        return this.request(`/reviews/${reviewId}/like`, {
+            method: 'DELETE'
+        });
+    }
 }
 
 export const api = new ApiClient();

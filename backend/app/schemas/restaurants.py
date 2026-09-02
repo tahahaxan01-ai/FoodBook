@@ -9,6 +9,7 @@ class RestaurantResponse(BaseModel):
     slug: str
     cuisines: List[str] = Field(default_factory=list)
     avg_price_per_person: Optional[float] = 0.0
+    cover_image_url: Optional[str] = None
     base_taste_vector: Optional[List[float]] = None
     aggregated_taste_vector: Optional[List[float]] = None
     review_count: int = 0

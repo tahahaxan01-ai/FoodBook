@@ -33,7 +33,7 @@ class ReviewService:
 
         # Attempt to call ML service
         try:
-            async with httpx.AsyncClient(timeout=0.5) as client:
+            async with httpx.AsyncClient(timeout=4.0) as client:
                 res = await client.post(
                     f"{settings.RECOMMENDATION_SERVICE_URL.rstrip('/')}/extract-aspects",
                     json={"text": review_text}

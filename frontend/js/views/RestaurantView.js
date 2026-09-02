@@ -260,6 +260,14 @@ export class RestaurantView {
                                             `).join('')}
                                         </div>
                                     ` : ''}
+
+                                    <div class="post-actions-row review-like-row mt-2">
+                                        <button type="button" class="post-action-btn like-btn review-like-btn ${rev.is_liked_by_user ? 'active' : ''}"
+                                            data-review-id="${rev.id}" data-liked="${!!rev.is_liked_by_user}">
+                                            <span class="like-icon">${rev.is_liked_by_user ? '❤️' : '🤍'}</span>
+                                            <span class="like-count">${rev.likes_count || 0}</span>
+                                        </button>
+                                    </div>
                                 </div>
                             `).join('') : `
                                 <div class="empty-state-box py-4 text-center">
@@ -393,6 +401,41 @@ export class RestaurantView {
         // Listen for new review created to refresh review list
         state.subscribe('reviewCreated', () => {
             RestaurantView.attachEvents();
+        });
+
+        // Review like toggle
+        document.querySelectorAll('.review-like-btn').forEach(btn => {
+            btn.addEventListener('click', async () => {
+                if (!state.user) {
+                    state.notify('requireAuth', { action: 'like_review' });
+                    return;
+                }
+                const reviewId = btn.getAttribute('data-review-id');
+                const isLiked = btn.getAttribute('data-liked') === 'true';
+                const countEl = btn.querySelector('.like-count');
+                const iconEl = btn.querySelector('.like-icon');
+                const newLiked = !isLiked;
+                const currentCount = parseInt(countEl.textContent, 10) || 0;
+
+                btn.setAttribute('data-liked', String(newLiked));
+                btn.classList.toggle('active', newLiked);
+                iconEl.textContent = newLiked ? '❤️' : '🤍';
+                countEl.textContent = newLiked ? currentCount + 1 : Math.max(0, currentCount - 1);
+
+                try {
+                    if (newLiked) {
+                        await api.likeReview(reviewId);
+                    } else {
+                        await api.unlikeReview(reviewId);
+                    }
+                } catch (err) {
+                    btn.setAttribute('data-liked', String(isLiked));
+                    btn.classList.toggle('active', isLiked);
+                    iconEl.textContent = isLiked ? '❤️' : '🤍';
+                    countEl.textContent = currentCount;
+                    state.notify('toast', { type: 'error', message: err.message || 'Failed to update like' });
+                }
+            });
         });
     }
 }

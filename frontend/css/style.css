@@ -2678,6 +2678,44 @@ a.bottom-nav-item {
 .animate-card { animation: fadeInUp 0.5s ease both; }
 
 /* ========================================================================
+   COMMUNITY FEED (Posts, Likes & Comments)
+   ======================================================================== */
+.community-feed-list { max-width: 640px; margin: 0 auto; }
+
+.post-card { padding: 1.5rem; }
+.post-card-header { display: flex; align-items: center; gap: 0.75rem; }
+.post-header-text { flex: 1; }
+.post-restaurant-tag { background: var(--primary-light); color: var(--primary); font-size: 0.78rem; font-weight: 700; padding: 0.3rem 0.7rem; border-radius: var(--radius-full); white-space: nowrap; }
+.post-card-image { width: 100%; max-height: 480px; object-fit: cover; border-radius: var(--radius-md); margin-top: 1rem; display: block; }
+.post-caption { font-size: 0.92rem; line-height: 1.6; color: var(--text-primary); }
+
+.post-actions-row { display: flex; align-items: center; gap: 1rem; border-top: 1px solid var(--border-color); padding-top: 0.85rem; }
+.review-like-row { border-top: none; padding-top: 0.6rem; margin-top: 0; }
+.post-action-btn { display: flex; align-items: center; gap: 0.4rem; background: none; border: none; cursor: pointer; font-size: 0.9rem; font-weight: 700; color: var(--text-muted); padding: 0.3rem 0.5rem; border-radius: var(--radius-md); transition: all 0.15s ease; }
+.post-action-btn:hover { background: var(--bg-surface); }
+.post-action-btn.like-btn.active { color: #EF4444; }
+.like-icon { font-size: 1.1rem; }
+
+.post-comments-section { margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border-color); }
+.post-comments-list { display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 0.85rem; max-height: 260px; overflow-y: auto; }
+.post-comment-item { display: flex; align-items: flex-start; gap: 0.6rem; }
+.comment-avatar { width: 30px; height: 30px; font-size: 0.8rem; flex-shrink: 0; }
+.post-comment-body { background: var(--bg-surface); border-radius: var(--radius-md); padding: 0.5rem 0.75rem; font-size: 0.85rem; line-height: 1.5; }
+.post-comment-author { font-weight: 700; margin-right: 0.4rem; }
+.post-comment-text { color: var(--text-muted); }
+.post-comment-form { display: flex; gap: 0.6rem; }
+.post-comment-input { flex: 1; }
+
+.post-image-preview img { width: 100%; max-height: 220px; object-fit: cover; border-radius: var(--radius-md); }
+.post-tag-group { position: relative; }
+.post-tag-results { position: absolute; top: 100%; left: 0; right: 0; z-index: 10; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-md); box-shadow: var(--shadow-md); margin-top: 0.3rem; overflow: hidden; }
+.post-tag-option { padding: 0.6rem 0.9rem; cursor: pointer; font-size: 0.85rem; }
+.post-tag-option:hover { background: var(--bg-surface); }
+.post-tag-empty { padding: 0.6rem 0.9rem; font-size: 0.82rem; color: var(--text-muted); }
+.post-tag-selected { margin-top: 0.5rem; }
+.tag-remove-btn { background: none; border: none; color: inherit; cursor: pointer; margin-left: 0.4rem; font-size: 0.75rem; }
+
+/* ========================================================================
    MOBILE RESPONSIVE OVERRIDES
    ======================================================================== */
 @media (max-width: 768px) {

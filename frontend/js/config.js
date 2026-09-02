@@ -105,10 +105,49 @@ export const CONFIG = {
         }
     },
 
+    // Multiple photos per cuisine bucket so restaurants that fall back to a
+    // cuisine match (i.e. anything beyond the curated RESTAURANT_MEDIA list
+    // above, e.g. restaurants pulled in live from OpenStreetMap) don't all
+    // render the exact same stock photo. Selection is hashed per-restaurant
+    // below so it's varied across restaurants but stable across reloads.
+    CUISINE_IMAGE_POOLS: {
+        pakistani: [
+            "https://images.unsplash.com/photo-1544025162-d76694265947?w=800&auto=format&fit=crop&q=80",
+            "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=800&auto=format&fit=crop&q=80",
+            "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&auto=format&fit=crop&q=80",
+            "https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?w=800&auto=format&fit=crop&q=80",
+            "https://images.unsplash.com/photo-1567620832903-9fc6debc209f?w=800&auto=format&fit=crop&q=80"
+        ],
+        pizza: [
+            "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=800&auto=format&fit=crop&q=80",
+            "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=800&auto=format&fit=crop&q=80"
+        ],
+        burger: [
+            "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=800&auto=format&fit=crop&q=80",
+            "https://images.unsplash.com/photo-1550547660-d9450f859349?w=800&auto=format&fit=crop&q=80"
+        ],
+        italian: ["https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&auto=format&fit=crop&q=80"],
+        chinese: ["https://images.unsplash.com/photo-1582878826629-29b7ad1cdc43?w=800&auto=format&fit=crop&q=80"],
+        cafe: ["https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=800&auto=format&fit=crop&q=80"],
+        lebanese: ["https://images.unsplash.com/photo-1541518763669-27fef04b14ea?w=800&auto=format&fit=crop&q=80"],
+        default: [
+            "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&auto=format&fit=crop&q=80",
+            "https://images.unsplash.com/photo-1544025162-d76694265947?w=800&auto=format&fit=crop&q=80"
+        ]
+    },
+
+    _hashPick(key, pool) {
+        let hash = 0;
+        for (let i = 0; i < key.length; i++) {
+            hash = (hash * 31 + key.charCodeAt(i)) >>> 0;
+        }
+        return pool[hash % pool.length];
+    },
+
     getRestaurantImage(restaurant) {
-        if (!restaurant) return "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&auto=format&fit=crop&q=80";
+        if (!restaurant) return CONFIG.CUISINE_IMAGE_POOLS.default[0];
         if (restaurant.cover_image_url) return restaurant.cover_image_url;
-        
+
         const slug = (restaurant.slug || "").toLowerCase();
         if (CONFIG.RESTAURANT_MEDIA[slug]) {
             return CONFIG.RESTAURANT_MEDIA[slug].image;
@@ -121,17 +160,22 @@ export const CONFIG = {
             }
         }
 
-        // Cuisine-based fallbacks
+        // Cuisine-based fallback, hash-picked from a pool so distinct
+        // restaurants of the same cuisine still get distinct photos.
         const cuisines = restaurant.cuisines || [];
         const cuisinesStr = cuisines.join(' ').toLowerCase();
-        if (cuisinesStr.includes('pizza')) return "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=800&auto=format&fit=crop&q=80";
-        if (cuisinesStr.includes('burger')) return "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=800&auto=format&fit=crop&q=80";
-        if (cuisinesStr.includes('bbq')) return "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=800&auto=format&fit=crop&q=80";
-        if (cuisinesStr.includes('italian')) return "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&auto=format&fit=crop&q=80";
-        if (cuisinesStr.includes('chinese')) return "https://images.unsplash.com/photo-1582878826629-29b7ad1cdc43?w=800&auto=format&fit=crop&q=80";
-        if (cuisinesStr.includes('cafe')) return "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=800&auto=format&fit=crop&q=80";
+        const hashKey = restaurant.id || slug || name || "restaurant";
 
-        return "https://images.unsplash.com/photo-1544025162-d76694265947?w=800&auto=format&fit=crop&q=80";
+        const bucket = cuisinesStr.includes('pizza') ? 'pizza'
+            : cuisinesStr.includes('burger') ? 'burger'
+            : cuisinesStr.includes('bbq') || cuisinesStr.includes('pakistani') || cuisinesStr.includes('desi') ? 'pakistani'
+            : cuisinesStr.includes('lebanese') || cuisinesStr.includes('mediterranean') ? 'lebanese'
+            : cuisinesStr.includes('italian') ? 'italian'
+            : cuisinesStr.includes('chinese') || cuisinesStr.includes('thai') ? 'chinese'
+            : cuisinesStr.includes('cafe') ? 'cafe'
+            : 'default';
+
+        return CONFIG._hashPick(hashKey, CONFIG.CUISINE_IMAGE_POOLS[bucket]);
     },
 
     getRestaurantDescription(restaurant) {

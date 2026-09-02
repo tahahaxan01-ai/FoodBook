@@ -113,7 +113,7 @@ class RecommendationService:
 
         # Check if Shehryar's AI/ML service is active
         try:
-            async with httpx.AsyncClient(timeout=0.5) as client:
+            async with httpx.AsyncClient(timeout=4.0) as client:
                 ml_payload = {
                     "user_id": request.user_id,
                     "taste_vector": user_vector,

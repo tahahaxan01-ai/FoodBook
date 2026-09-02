@@ -70,6 +70,57 @@ def _score_clause(clause: str) -> float:
     return 0.0
 
 
+# aspect (from ASPECT_KEYWORDS above) -> 9D taste-vector index it informs.
+# Only aspects with a direct taste meaning map here; portion/presentation/
+# service/ambiance/value are about the experience, not flavor, so they stay
+# out of the taste vector on purpose.
+ASPECT_TO_TASTE_DIM = {
+    "spice": 0,   # spicy
+    "cheese": 6,  # creamy
+    "crust": 7,   # crispy
+}
+
+# Straightforward keyword hits for the taste dimensions aspect-clauses don't
+# cover (sweet, salty, sour, umami, smoky, rich) — same idea as ASPECT_KEYWORDS
+# above, just indexed straight onto the 9D vector.
+TASTE_DIM_KEYWORDS = {
+    1: ["sweet", "sugary", "syrupy"],           # sweet
+    2: ["salty", "salted"],                      # salty
+    3: ["sour", "tangy", "citrusy", "vinegary"],  # sour
+    4: ["umami", "savory", "savoury", "broth", "meaty"],  # umami
+    5: ["smoky", "smokey", "charcoal", "charred", "bbq"],  # smoky
+    8: ["rich", "heavy", "indulgent", "buttery"],  # rich
+}
+
+
+def extract_taste_vector_and_aspects(text: str) -> tuple[dict[str, str], list[float]]:
+    """
+    Turn free-text review text into a 9D taste vector + a simple aspect
+    label map, for review creation and AI search query parsing to reuse.
+
+    Builds on `analyze_review`'s clause-level sentiment (so "not very spicy"
+    correctly pulls spice DOWN, not up) and layers in direct keyword hits
+    for the taste dimensions that aren't one of the ASPECT_KEYWORDS aspects.
+    """
+    vector = [0.5] * 9
+    aspects: dict[str, str] = {}
+
+    analysis = analyze_review(Review(review_id="adhoc", user_id="adhoc", restaurant_id="adhoc", text=text))
+    for a in analysis.aspects:
+        dim = ASPECT_TO_TASTE_DIM.get(a.aspect)
+        if dim is not None:
+            # sentiment score is -1..1; map onto 0..1 around a 0.5 baseline
+            vector[dim] = round(max(0.0, min(1.0, 0.5 + a.score * 0.5)), 2)
+        aspects[a.aspect] = a.sentiment
+
+    lower = text.lower()
+    for dim, keywords in TASTE_DIM_KEYWORDS.items():
+        if any(kw in lower for kw in keywords):
+            vector[dim] = 0.8
+
+    return aspects, vector
+
+
 def analyze_review(review: Review) -> ReviewAnalysis:
     clauses = _split_clauses(review.text)
     aspects: list[AspectSentiment] = []

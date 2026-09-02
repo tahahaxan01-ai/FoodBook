@@ -9,16 +9,20 @@ Storage is in-memory (dicts) for now — swap _DB for real DB calls once the
 `database` service/schema is ready; the function signatures in core/ already
 take plain data structures so that swap won't require touching core logic.
 """
+from typing import List, Optional
 from fastapi import FastAPI, HTTPException
+from pydantic import BaseModel, Field
 from app.models.schemas import (
     Review, Restaurant, UserInteraction, RecommendationRequest,
     Recommendation, SearchQueryParsed, TasteProfile,
 )
-from app.core.aspect_sentiment import analyze_review
+from app.core.aspect_sentiment import analyze_review, extract_taste_vector_and_aspects
 from app.core.taste_profile import build_taste_profile
 from app.core.recommender import recommend
 from app.core.search_ai import parse_query_rule_based
 from app.core.evaluation import evaluate_recommendations
+from app.core.database import db
+from app.core.vector_recommender import recommend_from_database
 
 app = FastAPI(title="FoodBook ML Service", version="0.1.0")
 
@@ -78,3 +82,67 @@ def parse_search(q: str):
 def evaluate(recommendations: dict[str, list[str]], relevant: dict[str, list[str]], k: int = 10):
     relevant_sets = {u: set(r) for u, r in relevant.items()}
     return evaluate_recommendations(recommendations, relevant_sets, k=k)
+
+
+# --- Real, database-backed endpoints consumed by the FoodBook backend ---
+# (the endpoints above operate on the in-memory demo store; these read
+# live data straight from Supabase and are what production traffic hits)
+
+class DbRecommendationRequest(BaseModel):
+    user_id: Optional[str] = None
+    taste_vector: Optional[List[float]] = None
+    preferred_cuisines: Optional[List[str]] = Field(default_factory=list)
+    dietary_restrictions: Optional[List[str]] = Field(default_factory=list)
+    max_budget: Optional[float] = None
+    latitude: Optional[float] = None
+    longitude: Optional[float] = None
+    radius_meters: Optional[int] = 15000
+    limit: Optional[int] = 10
+
+
+@app.post("/recommend")
+async def recommend_live(req: DbRecommendationRequest):
+    """
+    Hybrid content + collaborative-filtering recommendations computed
+    live against Supabase. This is the endpoint the FoodBook backend calls;
+    it degrades gracefully (empty list) if no database is configured so the
+    backend's built-in fallback can still take over.
+    """
+    if not db.is_connected:
+        return {"user_id": req.user_id, "total_recommendations": 0, "recommendations": [], "model_version": "unavailable"}
+
+    vector = req.taste_vector if req.taste_vector and len(req.taste_vector) == 9 else [0.5] * 9
+    return await recommend_from_database(
+        taste_vector=vector,
+        preferred_cuisines=req.preferred_cuisines or [],
+        max_budget=req.max_budget,
+        latitude=req.latitude,
+        longitude=req.longitude,
+        radius_meters=req.radius_meters or 15000,
+        limit=req.limit or 10,
+        user_id=req.user_id,
+    )
+
+
+class ExtractAspectsRequest(BaseModel):
+    text: str
+
+
+@app.post("/extract-aspects")
+def extract_aspects(req: ExtractAspectsRequest):
+    """
+    NLP aspect + 9D taste-vector extraction from free-text review content.
+    Consumed by the backend when a review is submitted with review_text.
+    """
+    aspects, vector = extract_taste_vector_and_aspects(req.text or "")
+    return {"aspects": aspects, "taste_vector": vector}
+
+
+class ParseSearchRequest(BaseModel):
+    query: str
+
+
+@app.post("/search/parse-query")
+def parse_search_query(req: ParseSearchRequest):
+    """Same conversational parser as GET /search/parse, as a POST for the backend to call."""
+    return parse_query_rule_based(req.query)

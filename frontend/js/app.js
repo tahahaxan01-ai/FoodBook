@@ -7,6 +7,7 @@ import { Footer } from './components/Footer.js';
 import { AuthModal } from './components/AuthModal.js';
 import { ReviewModal } from './components/ReviewModal.js';
 import { CollectionModal } from './components/CollectionModal.js';
+import { PostComposerModal } from './components/PostComposerModal.js';
 
 // Views
 import { HomeView } from './views/HomeView.js';
@@ -17,6 +18,7 @@ import { ProfileView } from './views/ProfileView.js';
 import { CollectionsView } from './views/CollectionsView.js';
 import { AISearchView } from './views/AISearchView.js';
 import { OwnerDashboardView } from './views/OwnerDashboardView.js';
+import { CommunityFeedView } from './views/CommunityFeedView.js';
 
 class App {
     static async init() {
@@ -27,6 +29,7 @@ class App {
             ${AuthModal.render()}
             ${ReviewModal.render()}
             ${CollectionModal.render()}
+            ${PostComposerModal.render()}
             <div id="toast-container" class="toast-container"></div>
         `;
 
@@ -35,6 +38,7 @@ class App {
         AuthModal.attachEvents();
         ReviewModal.attachEvents();
         CollectionModal.attachEvents();
+        PostComposerModal.attachEvents();
 
         // Subscribe to global toast notifications
         state.subscribe('toast', (data) => {
@@ -135,6 +139,10 @@ class App {
                 case 'collections':
                     main.innerHTML = await CollectionsView.render();
                     await CollectionsView.attachEvents();
+                    break;
+                case 'community':
+                    main.innerHTML = await CommunityFeedView.render();
+                    await CommunityFeedView.attachEvents();
                     break;
                 case 'ai-search':
                     main.innerHTML = await AISearchView.render();

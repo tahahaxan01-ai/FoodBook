@@ -19,7 +19,6 @@ export class Navbar {
                 <a href="#home" class="brand-logo" id="nav-brand">
                     <span class="logo-icon">🍽️</span>
                     <span class="brand-text">Food<span class="brand-highlight">Book</span></span>
-                    <span class="badge-ai">AI Taste</span>
                 </a>
 
                 <!-- Location Selector (Opens Area Modal) -->
@@ -37,6 +36,7 @@ export class Navbar {
                         <span class="sparkle">✨</span> AI Food Finder
                     </a>
                     <a href="#collections" class="nav-link ${state.currentView === 'collections' ? 'active' : ''}">Collections</a>
+                    <a href="#community" class="nav-link ${state.currentView === 'community' ? 'active' : ''}">Community</a>
                 </nav>
 
                 <!-- Action Controls -->
@@ -119,6 +119,7 @@ export class Navbar {
                     <a href="#explore" class="mobile-nav-link">🍴 Restaurants & Map</a>
                     <a href="#ai-search" class="mobile-nav-link">✨ AI Food Finder</a>
                     <a href="#collections" class="mobile-nav-link">📚 Food Collections</a>
+                    <a href="#community" class="mobile-nav-link">📸 Community Feed</a>
                     ${user ? `
                         <a href="#profile" class="mobile-nav-link">👤 My Profile & Taste Radar</a>
                         <a href="#onboarding" class="mobile-nav-link">🎛️ Taste Preferences</a>
@@ -185,6 +186,10 @@ export class Navbar {
             <a href="#collections" class="bottom-nav-item ${state.currentView === 'collections' ? 'active' : ''}">
                 <span class="bottom-nav-icon">📚</span>
                 <span class="bottom-nav-label">Guides</span>
+            </a>
+            <a href="#community" class="bottom-nav-item ${state.currentView === 'community' ? 'active' : ''}">
+                <span class="bottom-nav-icon">📸</span>
+                <span class="bottom-nav-label">Feed</span>
             </a>
             <a href="#profile" class="bottom-nav-item ${state.currentView === 'profile' ? 'active' : ''}">
                 <span class="bottom-nav-icon">👤</span>

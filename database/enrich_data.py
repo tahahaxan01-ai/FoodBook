@@ -460,6 +460,307 @@ ENRICHED_RESTAURANTS = [
         ]
     },
     {
+        "name": "Gloria Jean's Coffees DHA",
+        "slug": "gloria-jeans-coffees-dha",
+        "cuisines": ["Cafe", "Desserts"],
+        "avg_price_per_person": 750,
+        "avg_rating": 4.5,
+        "review_count": 160,
+        "base_taste_vector": [0.10, 0.75, 0.30, 0.20, 0.45, 0.20, 0.85, 0.55, 0.65],
+        "aggregated_taste_vector": [0.10, 0.75, 0.30, 0.20, 0.45, 0.20, 0.85, 0.55, 0.65],
+        "branches": [
+            {
+                "branch_name": "Y Block DHA",
+                "address": "Y Block Market, Phase 3 DHA, Lahore",
+                "city": "Lahore",
+                "lat": 31.4789,
+                "lon": 74.3721,
+                "phone_number": "+92 42 35742611",
+                "opening_time": "08:00:00",
+                "closing_time": "23:30:00"
+            }
+        ],
+        "menu_categories": [
+            {
+                "name": "Handcrafted Coffee",
+                "items": [
+                    {
+                        "name": "Caramel Macchiato (Regular)",
+                        "description": "Rich espresso layered with steamed milk, vanilla syrup and a golden caramel drizzle.",
+                        "price": 650,
+                        "item_taste_vector": [0.05, 0.75, 0.25, 0.15, 0.40, 0.15, 0.85, 0.20, 0.65]
+                    },
+                    {
+                        "name": "Cappuccino (Regular)",
+                        "description": "Classic double espresso shot topped with velvety steamed milk foam.",
+                        "price": 550,
+                        "item_taste_vector": [0.05, 0.25, 0.20, 0.15, 0.50, 0.15, 0.70, 0.10, 0.55]
+                    }
+                ]
+            },
+            {
+                "name": "Iced & Blended",
+                "items": [
+                    {
+                        "name": "Chocolate Fudge Frappe",
+                        "description": "Creamy iced chocolate blend crowned with whipped cream and fudge drizzle.",
+                        "price": 780,
+                        "item_taste_vector": [0.05, 0.85, 0.20, 0.10, 0.35, 0.10, 0.90, 0.15, 0.80]
+                    }
+                ]
+            },
+            {
+                "name": "Bakery & Desserts",
+                "items": [
+                    {
+                        "name": "New York Cheesecake Slice",
+                        "description": "Dense, creamy baked cheesecake on a buttery biscuit crust.",
+                        "price": 690,
+                        "item_taste_vector": [0.02, 0.80, 0.20, 0.15, 0.30, 0.05, 0.90, 0.30, 0.85]
+                    },
+                    {
+                        "name": "Blueberry Muffin",
+                        "description": "Soft-baked muffin studded with real blueberries and a light sugar crust.",
+                        "price": 420,
+                        "item_taste_vector": [0.02, 0.75, 0.15, 0.25, 0.25, 0.05, 0.55, 0.45, 0.55]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Broadway Pizza DHA",
+        "slug": "broadway-pizza-dha",
+        "cuisines": ["Pizza", "Fast Food"],
+        "avg_price_per_person": 1100,
+        "avg_rating": 4.4,
+        "review_count": 250,
+        "base_taste_vector": [0.55, 0.20, 0.75, 0.20, 0.75, 0.35, 0.85, 0.75, 0.80],
+        "aggregated_taste_vector": [0.55, 0.20, 0.75, 0.20, 0.75, 0.35, 0.85, 0.75, 0.80],
+        "branches": [
+            {
+                "branch_name": "Sector Z DHA",
+                "address": "Commercial Area, Sector Z, Phase 3 DHA, Lahore",
+                "city": "Lahore",
+                "lat": 31.4812,
+                "lon": 74.3789,
+                "phone_number": "+92 42 111339339",
+                "opening_time": "11:00:00",
+                "closing_time": "02:00:00"
+            }
+        ],
+        "menu_categories": [
+            {
+                "name": "Signature 21-inch Pizzas",
+                "items": [
+                    {
+                        "name": "Peri Peri Chicken Pizza (Large)",
+                        "description": "Fiery peri peri marinated chicken chunks over a bed of mozzarella and bell peppers.",
+                        "price": 1850,
+                        "item_taste_vector": [0.75, 0.20, 0.80, 0.30, 0.80, 0.30, 0.85, 0.65, 0.80]
+                    },
+                    {
+                        "name": "Fajita Sicilian Pizza (Large)",
+                        "description": "Smoky grilled chicken fajita strips, onions and capsicum on a rich tomato base.",
+                        "price": 1750,
+                        "item_taste_vector": [0.60, 0.20, 0.75, 0.30, 0.80, 0.55, 0.75, 0.65, 0.80]
+                    }
+                ]
+            },
+            {
+                "name": "Sides & Wings",
+                "items": [
+                    {
+                        "name": "Peri Peri Chicken Wings (8 pcs)",
+                        "description": "Crispy fried wings tossed in tangy peri peri sauce.",
+                        "price": 750,
+                        "item_taste_vector": [0.70, 0.15, 0.75, 0.30, 0.75, 0.30, 0.55, 0.90, 0.75]
+                    },
+                    {
+                        "name": "Garlic Bread with Cheese",
+                        "description": "Toasted garlic bread loaded with melted mozzarella.",
+                        "price": 480,
+                        "item_taste_vector": [0.10, 0.15, 0.60, 0.10, 0.55, 0.15, 0.85, 0.75, 0.65]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Mandarin Kitchen",
+        "slug": "mandarin-kitchen",
+        "cuisines": ["Chinese", "Continental"],
+        "avg_price_per_person": 1800,
+        "avg_rating": 4.6,
+        "review_count": 190,
+        "base_taste_vector": [0.65, 0.35, 0.75, 0.55, 0.90, 0.30, 0.40, 0.65, 0.70],
+        "aggregated_taste_vector": [0.65, 0.35, 0.75, 0.55, 0.90, 0.30, 0.40, 0.65, 0.70],
+        "branches": [
+            {
+                "branch_name": "MM Alam Road Gulberg",
+                "address": "Building 23-T, MM Alam Road, Gulberg III, Lahore",
+                "city": "Lahore",
+                "lat": 31.5178,
+                "lon": 74.3472,
+                "phone_number": "+92 42 35755100",
+                "opening_time": "12:30:00",
+                "closing_time": "23:30:00"
+            }
+        ],
+        "menu_categories": [
+            {
+                "name": "Wok Specialties",
+                "items": [
+                    {
+                        "name": "Szechuan Beef with Chili Garlic Sauce",
+                        "description": "Thinly sliced beef stir-fried in a fiery Szechuan chili garlic glaze.",
+                        "price": 1950,
+                        "item_taste_vector": [0.85, 0.25, 0.80, 0.45, 0.90, 0.30, 0.30, 0.50, 0.80]
+                    },
+                    {
+                        "name": "Crispy Prawn Tempura",
+                        "description": "Golden battered prawns, flash-fried and served with sweet chili dip.",
+                        "price": 2100,
+                        "item_taste_vector": [0.35, 0.40, 0.65, 0.35, 0.80, 0.15, 0.30, 0.90, 0.65]
+                    },
+                    {
+                        "name": "Pad Thai Noodles",
+                        "description": "Wok-tossed rice noodles with egg, tamarind, peanuts and fresh bean sprouts.",
+                        "price": 1450,
+                        "item_taste_vector": [0.45, 0.45, 0.60, 0.65, 0.75, 0.20, 0.35, 0.45, 0.60]
+                    }
+                ]
+            },
+            {
+                "name": "Soups & Starters",
+                "items": [
+                    {
+                        "name": "Chicken Corn Soup",
+                        "description": "Comforting shredded chicken and sweet corn broth thickened with egg drop.",
+                        "price": 550,
+                        "item_taste_vector": [0.15, 0.35, 0.55, 0.15, 0.75, 0.10, 0.40, 0.10, 0.45]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Baituti Lebanese Restaurant",
+        "slug": "baituti-lebanese-restaurant",
+        "cuisines": ["Lebanese", "Mediterranean"],
+        "avg_price_per_person": 1700,
+        "avg_rating": 4.7,
+        "review_count": 130,
+        "base_taste_vector": [0.35, 0.20, 0.70, 0.45, 0.75, 0.55, 0.55, 0.50, 0.65],
+        "aggregated_taste_vector": [0.35, 0.20, 0.70, 0.45, 0.75, 0.55, 0.55, 0.50, 0.65],
+        "branches": [
+            {
+                "branch_name": "Model Town",
+                "address": "Model Town Link Road, Model Town, Lahore",
+                "city": "Lahore",
+                "lat": 31.4820,
+                "lon": 74.3030,
+                "phone_number": "+92 42 35170099",
+                "opening_time": "13:00:00",
+                "closing_time": "23:30:00"
+            }
+        ],
+        "menu_categories": [
+            {
+                "name": "Mezze & Starters",
+                "items": [
+                    {
+                        "name": "Hummus Tahini with Pita",
+                        "description": "Smooth chickpea and tahini dip drizzled with olive oil, served with warm pita.",
+                        "price": 550,
+                        "item_taste_vector": [0.10, 0.10, 0.60, 0.30, 0.65, 0.10, 0.55, 0.30, 0.50]
+                    },
+                    {
+                        "name": "Fattoush Salad",
+                        "description": "Crisp mixed greens, radish and toasted pita chips tossed in sumac dressing.",
+                        "price": 650,
+                        "item_taste_vector": [0.10, 0.15, 0.45, 0.65, 0.40, 0.10, 0.20, 0.55, 0.30]
+                    }
+                ]
+            },
+            {
+                "name": "Grills & Mains",
+                "items": [
+                    {
+                        "name": "Chicken Shish Tawook Platter",
+                        "description": "Char-grilled marinated chicken skewers served with garlic sauce and rice.",
+                        "price": 1650,
+                        "item_taste_vector": [0.45, 0.15, 0.75, 0.35, 0.80, 0.65, 0.50, 0.45, 0.75]
+                    },
+                    {
+                        "name": "Mixed Grill Platter (Lamb, Chicken, Kafta)",
+                        "description": "A generous combination of lamb chops, chicken tawook and beef kafta off the charcoal grill.",
+                        "price": 2950,
+                        "item_taste_vector": [0.55, 0.10, 0.85, 0.25, 0.90, 0.80, 0.45, 0.50, 0.90]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Salt'n Pepper Village",
+        "slug": "saltn-pepper-village",
+        "cuisines": ["Pakistani", "BBQ", "Desi"],
+        "avg_price_per_person": 2400,
+        "avg_rating": 4.3,
+        "review_count": 300,
+        "base_taste_vector": [0.75, 0.20, 0.80, 0.25, 0.85, 0.75, 0.45, 0.60, 0.85],
+        "aggregated_taste_vector": [0.75, 0.20, 0.80, 0.25, 0.85, 0.75, 0.45, 0.60, 0.85],
+        "branches": [
+            {
+                "branch_name": "MM Alam Road",
+                "address": "B-3, 103 MM Alam Road, Gulberg, Lahore",
+                "city": "Lahore",
+                "lat": 31.5204,
+                "lon": 74.3541,
+                "phone_number": "+92 42 35750735",
+                "opening_time": "12:00:00",
+                "closing_time": "23:59:00"
+            }
+        ],
+        "menu_categories": [
+            {
+                "name": "Live Buffet Specials",
+                "items": [
+                    {
+                        "name": "Unlimited Village Buffet (Adult)",
+                        "description": "All-you-can-eat spread of live-cooked karahi, BBQ, biryani, naan and desserts.",
+                        "price": 2500,
+                        "item_taste_vector": [0.75, 0.25, 0.80, 0.25, 0.85, 0.70, 0.50, 0.60, 0.85]
+                    },
+                    {
+                        "name": "Unlimited Village Buffet (Child)",
+                        "description": "Same live buffet spread, priced for children under 10.",
+                        "price": 1500,
+                        "item_taste_vector": [0.55, 0.35, 0.70, 0.20, 0.75, 0.55, 0.55, 0.55, 0.75]
+                    }
+                ]
+            },
+            {
+                "name": "Tandoor Corner",
+                "items": [
+                    {
+                        "name": "Seekh Kabab Platter",
+                        "description": "Charcoal-grilled minced beef seekh kababs with mint chutney.",
+                        "price": 1200,
+                        "item_taste_vector": [0.80, 0.10, 0.85, 0.20, 0.90, 0.85, 0.30, 0.55, 0.85]
+                    },
+                    {
+                        "name": "Tandoori Naan Basket",
+                        "description": "Fresh-baked tandoori naan straight from the clay oven.",
+                        "price": 250,
+                        "item_taste_vector": [0.10, 0.15, 0.35, 0.10, 0.45, 0.35, 0.45, 0.75, 0.45]
+                    }
+                ]
+            }
+        ]
+    },
+    {
         "name": "Warid Butt Karahi",
         "slug": "warid-butt-karahi",
         "cuisines": ["Pakistani", "Desi"],

@@ -138,13 +138,34 @@ export class AISearchView {
                     budgetConstraint = parseFloat(budgetMatch[1]);
                 }
 
-                // 3. Detect Taste Aspects
+                // 3. Detect Taste Aspects -> both display tags AND a real 9D taste
+                // vector [spicy, sweet, salty, sour, umami, smoky, creamy, crispy, rich]
+                // so the ranking engine actually uses what was typed, not just cuisine/budget.
                 const detectedAspects = [];
-                if (queryLower.includes('spicy') || queryLower.includes('chili') || queryLower.includes('hot')) detectedAspects.push('🌶️ High Spice');
-                if (queryLower.includes('creamy') || queryLower.includes('cheesy') || queryLower.includes('butter')) detectedAspects.push('🧀 Creamy / Cheesy');
-                if (queryLower.includes('smoky') || queryLower.includes('bbq') || queryLower.includes('charcoal')) detectedAspects.push('🔥 Smoky Aroma');
-                if (queryLower.includes('crispy') || queryLower.includes('crunchy')) detectedAspects.push('🍟 Crispy Texture');
-                if (queryLower.includes('sweet') || queryLower.includes('sugar') || queryLower.includes('dessert')) detectedAspects.push('🍯 Sweetness');
+                const tasteVector = [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5];
+                if (queryLower.includes('spicy') || queryLower.includes('chili') || queryLower.includes('hot')) {
+                    detectedAspects.push('🌶️ High Spice');
+                    tasteVector[0] = 0.9;
+                }
+                if (queryLower.includes('mild') || queryLower.includes('not spicy')) tasteVector[0] = 0.15;
+                if (queryLower.includes('creamy') || queryLower.includes('cheesy') || queryLower.includes('butter')) {
+                    detectedAspects.push('🧀 Creamy / Cheesy');
+                    tasteVector[6] = 0.9;
+                }
+                if (queryLower.includes('smoky') || queryLower.includes('bbq') || queryLower.includes('charcoal')) {
+                    detectedAspects.push('🔥 Smoky Aroma');
+                    tasteVector[5] = 0.9;
+                }
+                if (queryLower.includes('crispy') || queryLower.includes('crunchy')) {
+                    detectedAspects.push('🍟 Crispy Texture');
+                    tasteVector[7] = 0.9;
+                }
+                if (queryLower.includes('sweet') || queryLower.includes('sugar') || queryLower.includes('dessert')) {
+                    detectedAspects.push('🍯 Sweetness');
+                    tasteVector[1] = 0.9;
+                }
+                if (queryLower.includes('rich') || queryLower.includes('buttery') || queryLower.includes('indulgent')) tasteVector[8] = 0.85;
+                const hasTasteSignal = detectedAspects.length > 0;
 
                 // Render Intent Card
                 intentBox.innerHTML = `
@@ -167,10 +188,14 @@ export class AISearchView {
                 `;
                 intentBox.style.display = 'block';
 
-                // Fetch recommendations from backend
+                // Fetch recommendations from backend, powered by the real 9D taste
+                // vector + cuisine + location signal extracted above.
                 const customRequest = {
                     preferred_cuisines: detectedCuisines.length > 0 ? detectedCuisines : ["Pakistani"],
                     max_budget: budgetConstraint,
+                    taste_vector: hasTasteSignal ? tasteVector : undefined,
+                    latitude: state.currentLocation?.latitude,
+                    longitude: state.currentLocation?.longitude,
                     limit: 8
                 };
 
